@@ -33,8 +33,12 @@ def play_games(agents):
     # writing the result of the game
     write_result(card_history, agent_history, penalty_points)
 
-
-
+# This function distributes cards to four agents as their hands.
+# Numbers are allocated to cards, respectively, below:
+#  0,  1, ..., 12 -> C-2, C-3, ..., C-A
+# 13, 14, ..., 25 -> D-2, D-3, ..., D-A
+# 26, 27, ..., 38 -> S-2, S-3, ..., S-A
+# 39, 40, ..., 51 -> H-2, H-3, ..., H-A
 def distribute_cards(agents):
     import random
     l = list(range(st.NUM_CARDS))

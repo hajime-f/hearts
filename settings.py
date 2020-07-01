@@ -8,7 +8,7 @@ NUM_KC = 13
 NUM_CARDS = NUM_SUITS * NUM_KC
 
 # Total number of games
-NUM_GAMES = 100000
+NUM_GAMES = 1
 
 # Number of players: Hearts is played by four players.
 NUM_PR = 4
