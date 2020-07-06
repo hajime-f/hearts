@@ -1,12 +1,12 @@
 import os, sys, datetime, random
 import settings as st
 import common as cm
-import random_agent
+import random_agent, rule_based_agent
 
 def main():
 
     # creating instances of agents
-    agents = [random_agent.Random_agent() for i in range(st.NUM_PR)]
+    agents = [rule_based_agent.Rule_based_agent() for i in range(st.NUM_PR)]
 
     # creating a directory for writing log
     dt_now = datetime.datetime.now()
@@ -20,7 +20,6 @@ def main():
     for i in range(st.NUM_GAMES):
         penalty_points = play_game(agents, i, dir_name)
         write_penalty_log(penalty_points, dir_name)
-
 
 
 def play_game(agents, game_number, dir_name):
@@ -55,12 +54,15 @@ def play_game(agents, game_number, dir_name):
                 card_history[trick][turn] = selected_card
                 agent_history[trick][turn] = j
         winner = cm.get_winner(card_history[trick], agent_history[trick])
+        if winner == -1:
+            sys.exit('A wrong winner is selected')
 
     # calculating penalty points
     penalty_points = calculate_penalty_points(card_history, agent_history)
 
     # writing playing log
-    write_playing_log(card_history, agent_history, dist_cards, game_number, penalty_points, dir_name)
+    if st.DEBUG_MODE:
+        write_playing_log(card_history, agent_history, dist_cards, game_number, penalty_points, dir_name)
 
     # closing the game
     for a in agents:
@@ -113,7 +115,7 @@ def calculate_penalty_points(card_history, agent_history):
 
 def write_playing_log(card_history, agent_history, dist_cards, game_number, penalty_points, dir_name):
 
-    f = open(dir_name+'/log_'+str(game_number+1).zfill(8)+'.log', mode='w')
+    f = open(dir_name+'/log_'+str(game_number+1).zfill(6)+'.log', mode='w')
     hand_list = [[-1 for j in range(st.NUM_KC)] for i in range(st.NUM_PR)]
     for j in range(st.NUM_PR):
         hand_list[j] = dist_cards[j*st.NUM_KC:(j+1)*st.NUM_KC].copy()

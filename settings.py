@@ -1,3 +1,5 @@
+DEBUG_MODE = 1
+
 # Number of suits: Spade, Heart, Diamond and Club
 NUM_SUITS = 4
 
@@ -23,7 +25,7 @@ S_Q = SPADE * NUM_KC + 10
 H_2 = HEART * NUM_KC
 
 # File name for writing the result
-FILE_NAME = 'result.log'
+FILE_NAME = 'result.csv'
 
 # for debug
 CARD_NAME = ['C-2', 'C-3', 'C-4', 'C-5', 'C-6', 'C-7', 'C-8', 'C-9', 'C-10', 'C-J', 'C-Q', 'C-K', 'C-A',

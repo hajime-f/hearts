@@ -53,17 +53,22 @@ class Agent(metaclass = abc.ABCMeta):
                     return 1
                 else:
                     return 0
+        else:
+            pass
 
         leading_card = card_seq[0]
 
         # If the agent has a card whose suit is the same as that of the leading card,
         # discarding another card whose suit is different from that is not allowed.
-        if cm.is_suit_in_hand(self.hand, leading_card) and cm.get_suit(leading_card) != cm.get_suit(card):
-            return 0
+        if cm.get_suit(leading_card) != cm.get_suit(card):
+            if cm.is_suit_in_hand(self.hand, leading_card):
+                return 0
+            else:
+                return 1
 
         # If the heart break has not been occured and the agent has a card with a suit other than heart,
         # discarding a heart card as a leading card is not allowed.
-        if not self.hb_flag and cm.is_not_heart_in_hand(self.hand) and cm.get_suit(card) == st.HEART:
-            return 0
+        #if not self.hb_flag and cm.is_not_heart_in_hand(self.hand) and cm.get_suit(card) == st.HEART:
+        #    return 0
 
         return 1

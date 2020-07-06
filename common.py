@@ -1,13 +1,18 @@
+import sys
 import settings as st
 
 def get_suit(card):
     return card // st.NUM_KC
 
 def is_card_in_hand(hand, card):
-    for h in hand:
-        if h == card:
-            return 1
-    return 0
+    try:
+        return hand.index(card)
+    except ValueError:
+        return 0
+#    for h in hand:
+#        if h == card:
+#            return 1
+#    return 0
 
 def is_suit_in_hand(hand, card):
     suit = get_suit(card)
@@ -25,7 +30,7 @@ def is_not_heart_in_hand(hand):
 def get_winner(card_seq, agent_seq):
     leading_card = card_seq[0]
     if leading_card == -1:
-        print('Leading card is wrong.')
+        sys.exit('The leading card is wrong.')
     else:
         lc_suit = get_suit(leading_card)
         winner = agent_seq[0]
