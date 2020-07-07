@@ -14,6 +14,23 @@ def is_card_in_hand(hand, card):
 #            return 1
 #    return 0
 
+def is_card_discarded(card_seq, card):
+    for c in card_seq:
+        if c == -1:
+            break
+        elif c == card:
+            return 1
+        else:
+            pass
+    return 0
+
+def is_stronger_card_discarded(card_seq, card):
+    suit = get_suit(card)
+    for c in range(card, st.NUM_KC*(suit+1)):
+        if is_card_discarded(card_seq, c):
+            return 1
+    return 0
+
 def is_suit_in_hand(hand, card):
     suit = get_suit(card)
     for h in hand:

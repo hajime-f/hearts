@@ -64,6 +64,7 @@ class Agent(metaclass = abc.ABCMeta):
             if cm.is_suit_in_hand(self.hand, leading_card):
                 return 0
             else:
+                print('b')
                 return 1
 
         # If the heart break has not been occured and the agent has a card with a suit other than heart,
@@ -71,4 +72,4 @@ class Agent(metaclass = abc.ABCMeta):
         #if not self.hb_flag and cm.is_not_heart_in_hand(self.hand) and cm.get_suit(card) == st.HEART:
         #    return 0
 
-        return 1
+        return 0

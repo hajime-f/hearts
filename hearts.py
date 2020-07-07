@@ -5,8 +5,17 @@ import random_agent, rule_based_agent
 
 def main():
 
+    # assigning agents
+    # 1 -> random_agent, 2 -> rule_based_agent,
+    ind = [2, 1, 1, 1]
+
     # creating instances of agents
-    agents = [rule_based_agent.Rule_based_agent() for i in range(st.NUM_PR)]
+    agents = [0] * st.NUM_PR
+    for i in range(st.NUM_PR):
+        if ind[i] == 1:
+            agents[i] = random_agent.Random_agent()
+        elif ind[i] == 2:
+            agents[i] = rule_based_agent.Rule_based_agent()
 
     # creating a directory for writing log
     dt_now = datetime.datetime.now()
@@ -131,7 +140,11 @@ def write_playing_log(card_history, agent_history, dist_cards, game_number, pena
         f.write('==== Trick ' + str(trick+1) + ' ====\n')
         for card, agent, turn in zip(card_seq, agent_seq, range(st.NUM_PR)):
             f.write('Agent ' + str(agent+1) + ': ' + str(st.CARD_NAME[card]))
-            hand_list[agent].remove(card)
+            try:
+                hand_list[agent].remove(card)
+            except ValueError:
+                print('ValueError: hearts.py in line 146')
+                sys.exit(card_history)
             hand_str = ' -> '
             for i in hand_list[agent]:
                 hand_str += str(st.CARD_NAME[i]) + ', '
