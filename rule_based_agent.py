@@ -17,7 +17,7 @@ class Rule_based_agent(agent.Agent):
                 card = self.hand[i]
                 # When the first turn,
                 if not turn:
-                    pass
+                    continue
                 # When the following terns,
                 else:
                     leading_card = card_history[trick][0]
@@ -36,7 +36,7 @@ class Rule_based_agent(agent.Agent):
                                 return card
                             else:
                                 score[i] = -100
-                    if card >= H_2:
+                    if card >= st.H_2:
                         if cm.get_suit(leading_card) != st.HEART:
                             score[i] = math.exp(card/10)
         max = -10000

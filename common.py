@@ -20,8 +20,6 @@ def is_card_discarded(card_seq, card):
             break
         elif c == card:
             return 1
-        else:
-            pass
     return 0
 
 def is_stronger_card_discarded(card_seq, card):

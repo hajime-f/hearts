@@ -16,6 +16,8 @@ def main():
             agents[i] = random_agent.Random_agent()
         elif ind[i] == 2:
             agents[i] = rule_based_agent.Rule_based_agent()
+        else:
+            sys.exit('A wrong number is selected.')
 
     # creating a directory for writing log
     dt_now = datetime.datetime.now()
@@ -39,7 +41,7 @@ def play_game(agents, game_number, dir_name):
     # initializing agent history (who discarded the card in each turn of each trick)
     agent_history = [[-1 for j in range(st.NUM_PR)] for i in range(st.NUM_KC)]
 
-    # initializing heart break flog
+    # initializing heart break flag
     hb_flag = 0
 
     # distributing cards to four agents
@@ -57,6 +59,7 @@ def play_game(agents, game_number, dir_name):
             if not hb_flag and selected_card >= st.H_2:
                 hb_flag = heart_break(agents)
             if selected_card == -1:
+                print(agents[j])
                 write_playing_log(card_history, agent_history, dist_cards, game_number, [0 for i in range(st.NUM_PR)], dir_name)
                 sys.exit('A wrong card is selected in game #' + str(game_number+1))
             else:
@@ -74,8 +77,7 @@ def play_game(agents, game_number, dir_name):
         write_playing_log(card_history, agent_history, dist_cards, game_number, penalty_points, dir_name)
 
     # closing the game
-    for a in agents:
-        a.end_game()
+    for a in agents: a.end_game()
     del card_history, agent_history, dist_cards, seq
 
     return penalty_points

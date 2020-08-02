@@ -36,8 +36,8 @@ class Agent(metaclass = abc.ABCMeta):
                     return 0
                 else:
                     return 1
-            else:
-                pass
+
+        print('d')
 
         if turn == 0:
             # In the first turn, when the heart break has occured, any card cab be discarded.
@@ -53,8 +53,6 @@ class Agent(metaclass = abc.ABCMeta):
                     return 1
                 else:
                     return 0
-        else:
-            pass
 
         leading_card = card_seq[0]
 
@@ -72,4 +70,4 @@ class Agent(metaclass = abc.ABCMeta):
         #if not self.hb_flag and cm.is_not_heart_in_hand(self.hand) and cm.get_suit(card) == st.HEART:
         #    return 0
 
-        return 0
+        return 1
