@@ -54,7 +54,7 @@ def play_game(agents, game_number, dir_name):
     # starting a game
     for trick in range(st.NUM_KC):
         seq = cm.get_agent_sequence(winner)
-        for turn, j in zip(range(st.NUM_PR), seq):
+        for turn, j in enumerate(seq):
             selected_card = agents[j].select_card(card_history, agent_history, trick, turn)
             if not hb_flag and selected_card >= st.H_2:
                 hb_flag = heart_break(agents)
@@ -78,7 +78,6 @@ def play_game(agents, game_number, dir_name):
 
     # closing the game
     for a in agents: a.end_game()
-    del card_history, agent_history, dist_cards, seq
 
     return penalty_points
 
@@ -90,7 +89,6 @@ def distribute_cards(agents):
             break
     for i in range(st.NUM_PR):
         agents[i].set_cards(dist_cards[i*st.NUM_KC:(i+1)*st.NUM_KC])
-    del l
     return dist_cards
 
 def is_all_heart(dist_cards):
@@ -157,7 +155,6 @@ def write_playing_log(card_history, agent_history, dist_cards, game_number, pena
     for i in range(st.NUM_PR):
         f.write('Agent ' + str(i+1) + ': ' + str(penalty_points[i]) + '\n')
 
-    del hand_list
     f.close()
     return 1
 

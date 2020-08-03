@@ -14,7 +14,6 @@ class Agent(metaclass = abc.ABCMeta):
         self.hand = cards.copy()
 
     def end_game(self):
-        del self.hand
         self.hb_flag = 0
 
     @abc.abstractmethod
@@ -36,8 +35,6 @@ class Agent(metaclass = abc.ABCMeta):
                     return 0
                 else:
                     return 1
-
-        print('d')
 
         if turn == 0:
             # In the first turn, when the heart break has occured, any card cab be discarded.
@@ -62,7 +59,6 @@ class Agent(metaclass = abc.ABCMeta):
             if cm.is_suit_in_hand(self.hand, leading_card):
                 return 0
             else:
-                print('b')
                 return 1
 
         # If the heart break has not been occured and the agent has a card with a suit other than heart,
