@@ -22,7 +22,13 @@ NUM_PR = 4
 
 C_2 = 0
 S_Q = SPADE * NUM_KC + 10
+S_K = SPADE * NUM_KC + 11
+S_A = SPADE * NUM_KC + 12
 H_2 = HEART * NUM_KC
+
+# Penalty points
+PT_S_Q = 13
+PT_HEART = 1
 
 # File name for writing the result
 FILE_NAME = 'result.csv'

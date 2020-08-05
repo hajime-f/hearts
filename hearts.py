@@ -114,9 +114,9 @@ def calculate_penalty_points(card_history, agent_history):
         penalty = 0
         for card in card_seq:
             if card >= st.H_2:
-                penalty += 1
+                penalty += st.PT_HEART
             elif card == st.S_Q:
-                penalty += 13
+                penalty += st.PT_S_Q
             else:
                 pass
         penalty_points[cm.get_winner(card_seq, agent_seq)] += penalty

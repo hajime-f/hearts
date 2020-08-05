@@ -8,11 +8,17 @@ def is_card_in_hand(hand, card):
     try:
         return hand.index(card)
     except ValueError:
-        return 0
+        return -1
 #    for h in hand:
 #        if h == card:
 #            return 1
 #    return 0
+
+def is_card_discarded_in_game(card_history, card):
+    for trick in range(st.NUM_KC):
+        if is_card_discarded(card_history[trick], card):
+            return 1
+    return 0
 
 def is_card_discarded(card_seq, card):
     for c in card_seq:
@@ -28,6 +34,26 @@ def is_stronger_card_discarded(card_seq, card):
         if is_card_discarded(card_seq, c):
             return 1
     return 0
+
+def get_remaining_stronger_card_number(card_history, card):
+    num = 0
+    suit = get_suit(card)
+    min_n = suit*st.NUM_KC
+    max_n = (suit+1)*st.NUM_KC
+    for trick in range(st.NUM_KC):
+        for turn in range(st.NUM_PR):
+            dist_card = card_history[trick][turn]
+            if min_n < dist_card and dist_card < max_n and card < dist_card:
+                num += 1
+    return num
+
+def get_discarded_suit_number(card_history, suit):
+    num = 0
+    for trick in range(st.NUM_KC):
+        for card in card_history[trick]:
+            if suit == get_suit(card):
+                num += 1
+    return num
 
 def is_suit_in_hand(hand, card):
     suit = get_suit(card)
