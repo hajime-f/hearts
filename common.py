@@ -20,6 +20,20 @@ def is_card_discarded_in_game(card_history, card):
             return 1
     return 0
 
+def get_remaining_card_list(card_history, hand, suit):
+    r_list = [0] * st.NUM_KC
+    min_n = suit*st.NUM_KC
+    max_n = (suit+1)*st.NUM_KC
+    for trick in range(st.NUM_KC):
+        for turn in range(st.NUM_PR):
+            dist_card = card_history[trick][turn]
+            if min_n <= dist_card and dist_card < max_n:
+                r_list[dist_card % st.NUM_KC] = 1
+    for h in hand:
+        if min_n <= h and h < max_n:
+            r_list[h % st.NUM_KC] = 2
+    return r_list
+
 def is_card_discarded(card_seq, card):
     for c in card_seq:
         if c == -1:

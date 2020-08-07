@@ -41,7 +41,23 @@ class Rule_based_agent(agent.Agent):
             return self.scoring_card_following_turn(card_history, agent_history, trick, turn, card)
 
     def scoring_card_first_turn(self, card_history, agent_history, trick, card):
+
         turn = 0
+        suit = cm.get_suit(card)
+
+        if card == st.S_K or card == st.S_A:
+            if not cm.is_card_discarded_in_game(card_history, st.S_Q):
+                return -self.INF + 1
+
+        if card == st.S_Q:
+            c_list = cm.get_remaining_card_list(card_history, self.hand, suit)
+            if c_list[0:st.NUM_KC-3].count(1) + c_list[0:st.NUM_KC-3].count(2) >= st.NUM_KC - 5:
+                #print(c_list, c_list[0:st.NUM_KC-3].count(1) + c_list[0:st.NUM_KC-3].count(2))
+                #sys.exit()
+                return self.INF
+            else:
+                return -self.INF + 1
+
         return 2
 
     def scoring_card_following_turn(self, card_history, agent_history, trick, turn, card):
@@ -81,18 +97,25 @@ class Rule_based_agent(agent.Agent):
 
         if turn == st.NUM_PR-1 and cm.get_suit(leading_card) != st.HEART:
             if card == st.S_K:
-                return -self.INF + 2
-            if card == st.S_A:
                 return -self.INF + 1
+            if card == st.S_A:
+                return -self.INF + 2
 
         if suit == st.SPADE and suit == cm.get_suit(leading_card):
             if card == st.S_K and cm.is_card_discarded(card_history[trick], st.S_A):
                 return self.INF - 1
+            if (card == st.S_K or card == st.S_A) and cm.is_card_discarded(card_history[trick], st.S_Q):
+                return -self.INF + 1
             if not cm.is_card_discarded_in_game(card_history, st.S_Q):
                 if card == st.S_K:
                     return -self.INF + 2
                 if card == st.S_A:
                     return -self.INF + 1
+            if turn == st.NUM_PR - 1 and not cm.is_card_discarded(card_history[trick], st.S_Q) and trick <= st.NUM_KC / 2:
+                if card == st.S_K:
+                    return self.INF - 2
+                if card == st.S_A:
+                    return self.INF - 1                
 
         return 1
 
