@@ -93,7 +93,7 @@ class Rule_based_agent(agent.Agent):
             else:
                 return self.validate_score(-math.exp(card/6))
 
-        if suit != cm.get_suit(leading_card):
+#        if suit != cm.get_suit(leading_card):
 
         if turn == st.NUM_PR-1 and cm.get_suit(leading_card) != st.HEART:
             if card == st.S_K:
