@@ -1,5 +1,6 @@
 from datetime import datetime as dt
 import settings as st
+import common as cm
 import os, random
 
 class Game():
@@ -25,11 +26,11 @@ class Game():
     def play_one_game(self):
 
         # initializing game settings
-        hb_flag = 0
+        hb_flag = False
         card_history, agent_history = self.initialize_history()
 
         # distributing cards to four agents
-        dist_cards = distribute_cards()
+        dist_cards = self.distribute_cards()
         
         # Getting the playing sequence in the first trick based on their hands
         # (the agent who has C-2 is the leading player in the initial trick)
@@ -39,11 +40,11 @@ class Game():
         for trick in range(st.NUM_KC):
             seq = cm.get_agent_sequence(winner)
             for turn, j in enumerate(seq):
-                selected_card = agents[j].select_card(card_history, agent_history, trick, turn)
+                selected_card = self.agents[j].select_card(card_history, agent_history, trick, turn)
                 if not hb_flag and selected_card >= st.H_2:
-                    hb_flag = heart_break(agents)
+                    hb_flag = True
                 if selected_card == -1:
-                    print(agents[j])
+                    print(self.agents[j])
                     write_playing_log(card_history, agent_history, dist_cards, game_number, [0 for i in range(st.NUM_PR)], dir_name)
                     sys.exit('A wrong card is selected in game #' + str(game_number+1))
                 else:
@@ -53,7 +54,6 @@ class Game():
             if winner == -1:
                 sys.exit('A wrong winner is selected')
         
-
 
     def initialize_history(self):
 
@@ -76,7 +76,7 @@ class Game():
         return dist_cards
             
 
-    def is_all_heart(dist_cards):
+    def is_all_heart(self, dist_cards):
         
         for j in range(st.NUM_PR):
             k = 0
